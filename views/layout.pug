@@ -6,7 +6,8 @@ html
         link(rel='stylesheet', href='/stylesheets/style.css')
     body
         nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.rounded.mb-5
-            a.navbar-brand(href='#') Library Menu
+            a.navbar-brand(href='#')
+                img(src="/images/favicon.ico" width="30" height="auto")
             button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
                 span.navbar-toggler-icon
             #navbarNav.collapse.navbar-collapse
@@ -19,8 +20,11 @@ html
                             a.dropdown-item(href="/user") All Users
                             a.dropdown-item(href="/user/register") Singup
                             a.dropdown-item(href="/user/login") Singin
-                    li.nav-item
-                        a.nav-link.text-white(href='/book') Books
+                    li.nav-item.dropdown
+                        a.nav-link.dropdown-toggle.text-white(href='#' id="navbarBook" data-toggle="dropdown") Books
+                        div.dropdown-menu(aria-labelledby="navbarBook")
+                            a.dropdown-item(href="/book") All Books
+                            a.dropdown-item(href="/book/create") Create Book
 
         block content
 

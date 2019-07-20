@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    .container
+        .row
+            .col-6.offset-3
+                form(action="/book/create" method="post")
+                    div.form-group
+                        label(for="title") title
+                        input#title.form-control(type="text" name="title")
+                    div.form-group
+                        label(for="writer") writer
+                        input#writer.form-control(type="writer" name="writer")
+                    div.form-group
+                        label(for="description") description
+                        textarea#description.form-control(name="description" rows="5")
+                    button.btn.btn-primary(type="submit") submit

@@ -9,8 +9,17 @@ class BookController extends Controller {
             .select({ title: true, description: true, writer: true })
             .exec( function (err, book) {
                 if (err) throw new Error(err);
-                res.json(book);
+                res.render('book', {
+                    books: book,
+                    title: 'Show All Books'
+                });
             });
+    };
+
+    showCreateBook(req, res) {
+        res.render('createBook', {
+            title: 'Show Create Book Form'
+        });
     };
 
     createBook(req, res) {
@@ -20,7 +29,7 @@ class BookController extends Controller {
             newBook
                 .save()
                 .then(book => {
-                    res.json(book);
+                    res.redirect('/book');
                 })
                 .catch(err => {
                     res.status(500).send(err);
