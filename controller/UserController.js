@@ -1,5 +1,6 @@
 const Controller = require('controller/Controller');
 const User = require('model/UserModel');
+const Book = require('model/BookModel');
 const passport = require('passport');
 
 
@@ -9,7 +10,7 @@ class UserController extends Controller {
             .find({})
             .select({ name: true, email: true, password: true, writer: true, books: true })
             .sort({_id: -1})
-            .populate('books')
+            .populate('books', ['title'])
             .exec( function (err, user) {
                 if (err) throw new Error(err);
                 res.render('user', {
@@ -18,24 +19,6 @@ class UserController extends Controller {
                 });
         });
     };
-
-    // createUserProcess(req, res) {
-    //     const {name, email, password, writer, admin, books } = req.body;
-    //     if (name && email && password) {
-    //         let newUser = new User(req.body);
-    //         newUser
-    //             .save()
-    //             .then(user => {
-    //                 res.json(user);
-    //             })
-    //             .catch(err => {
-    //                 res.status(500).send(err);
-    //                 throw new Error(err);
-    //             })
-    //     } else {
-    //         res.status(401).send('Data Incomplete');
-    //     }
-    // };
 
     createUserProcess(req, res) {
         passport.authenticate('local.register', {
@@ -60,7 +43,9 @@ class UserController extends Controller {
             .findById(id)
             .populate('books')
             .then(user => {
-                res.json(user);
+                res.render('editUser', {
+                    user: user
+                });
             })
             .catch(err => {
                 res.status(500).send(err);
@@ -70,14 +55,14 @@ class UserController extends Controller {
 
     updateUser(req, res) {
         const id = req.params.id;
-        const { name, email, password, writer, admin, books } = req.body;
+        const { name, email, password, writer, admin } = req.body;
         if (name && email && password) {
             User
                 .findByIdAndUpdate(id, {
-                    name, email, password, writer, admin, books
+                    name, email, password, writer, admin
                 })
                 .then(user => {
-                    res.json(user);
+                    res.redirect('/user');
                 })
                 .catch(err => {
                     res.status(500).send(err);
@@ -86,6 +71,41 @@ class UserController extends Controller {
         } else {
             res.status(401).send('Data Incomplete');
         }
+    };
+    
+    rentBook(req, res) {
+        const books = req.user.books;
+        if (books.indexOf(req.params.id) > -1) {
+            res.redirect('/user');
+        } else {
+            books.push(req.params.id);
+        } // If the user rents the book previously, he can not rent again
+        if (books) {
+            User
+                .findByIdAndUpdate(req.user._id, { books })
+                .then(user => {
+                    res.redirect('/user');
+                })
+                .catch(err => {
+                    res.status(500).send(err);
+                    throw new Error(err);
+                });
+        } else {
+            res.status(401).send('Data Incomplete');
+        }
+    };
+    
+    deleteUser(req, res) {
+        User
+            .findOneAndDelete(req.params.id, (err) => {
+                if (err) throw new Error(err);
+                res.redirect('/user');
+            });
+    }
+    
+    logout(req, res) {
+        req.logout();
+        res.redirect('/');
     };
 }
 

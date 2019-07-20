@@ -12,6 +12,8 @@ block content
                                 th(scope='col') Name
                                 th(scope='col') Email
                                 th(scope='col') Writer
+                                th(scope='col') Books
+                                th(scope='col') Options
                         tbody
                             each user, i in users
                                 tr
@@ -19,5 +21,19 @@ block content
                                     td #{user.name}
                                     td #{user.email}
                                     td #{user.writer}
+                                    td
+                                        if (user.books)
+                                            each book in user.books
+                                                p #{book.title}
+                                    td
+                                        .btn-group
+                                            a.btn.btn-sm.btn-primary.rounded-0(href="/user/edit/" + user._id) Edit
+                                            form(method="POST", action="/user/delete/" + user._id)
+                                                input(type="hidden", name="_method", value="DELETE")
+                                                button.btn.btn-sm.btn-danger.rounded-0 Delete
+
+                                        //.btn-group
+                                        //    button.btn.btn-sm.btn-primary(type="button") edit
+                                        //    button.btn.btn-sm.btn-danger(type="button") delete
                 else
                     .h2.text-center.text-danger Can't Find Any User

@@ -12,7 +12,10 @@ const RedirectNotAuthenticated = require('middleware/RedirectNotAuthenticated');
 const UserController = require('controller/UserController');
 
 router.route('/')
-    .get(UserController.showAllUsers); // Show All user
+    .get(
+        RedirectNotAuthenticated.handle,
+        UserController.showAllUsers
+    ); // Show All user
 
 router.route('/register')
     .all( RedirectIfAuthenticated.handle )
@@ -24,10 +27,25 @@ router.route('/login')
     .get((req, res) => { res.render('login') })
     .post(UserController.loginUserProcess); // Login User
 
-router.route('/:id')
-    .all( RedirectNotAuthenticated.handle )
+router.route('/logout')
+    .get(
+        RedirectNotAuthenticated.handle,
+        UserController.logout
+    ); // Logout
+
+router.route('/edit/:id')
+    .all(RedirectNotAuthenticated.handle )
     .get(UserController.getUser) // Get Single User Info
     .put(UserController.updateUser); // User Update
+
+router.route('/rent/:id')
+    .put(
+        RedirectNotAuthenticated.handle,
+        UserController.rentBook
+    ); // Rent Book
+
+router.route('/delete/:id')
+    .delete(UserController.deleteUser);
 
 router.route('/profile')
     .all( RedirectNotAuthenticated.handle )

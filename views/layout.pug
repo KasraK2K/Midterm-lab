@@ -16,15 +16,23 @@ html
                         a.nav-link.text-white(href='/') Home
                     li.nav-item.dropdown
                         a.nav-link.dropdown-toggle.text-white(href='#' id="navbarUser" data-toggle="dropdown") Users
-                        div.dropdown-menu(aria-labelledby="navbarUser")
-                            a.dropdown-item(href="/user") All Users
-                            a.dropdown-item(href="/user/register") Singup
-                            a.dropdown-item(href="/user/login") Singin
-                    li.nav-item.dropdown
-                        a.nav-link.dropdown-toggle.text-white(href='#' id="navbarBook" data-toggle="dropdown") Books
-                        div.dropdown-menu(aria-labelledby="navbarBook")
-                            a.dropdown-item(href="/book") All Books
-                            a.dropdown-item(href="/book/create") Create Book
+                        if auth.check
+                            div.dropdown-menu(aria-labelledby="navbarUser")
+                                a.dropdown-item(href="/user/profile") Profile
+                                .dropdown-divider
+                                a.dropdown-item(href="/user") All Users
+                                .dropdown-divider
+                                a.dropdown-item(href="/user/logout") logout
+                        else
+                            div.dropdown-menu(aria-labelledby="navbarUser")
+                                a.dropdown-item(href="/user/register") Singup
+                                a.dropdown-item(href="/user/login") Singin
+                    if auth.check
+                        li.nav-item.dropdown
+                            a.nav-link.dropdown-toggle.text-white(href='#' id="navbarBook" data-toggle="dropdown") Books
+                            div.dropdown-menu(aria-labelledby="navbarBook")
+                                a.dropdown-item(href="/book") All Books
+                                a.dropdown-item(href="/book/create") Create Book
 
         block content
 

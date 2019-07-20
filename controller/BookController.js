@@ -1,19 +1,24 @@
 const Controller = require('controller/Controller');
 const Book = require('model/BookModel');
+const User = require('model/UserModel');
 
 
 class BookController extends Controller {
     showAllBooks(req, res) {
-        Book
-            .find({})
-            .select({ title: true, description: true, writer: true })
-            .exec( function (err, book) {
-                if (err) throw new Error(err);
-                res.render('book', {
-                    books: book,
-                    title: 'Show All Books'
+        User.find({}).select('books').exec(function (err, user) {
+            if (err) throw new Error(err);
+            Book
+                .find({})
+                .select({ title: true, description: true, writer: true, count: true })
+                .exec( function (err, book) {
+                    if (err) throw new Error(err);
+                    res.render('book', {
+                        books: book,
+                        user_id: req.user._id,
+                        title: 'Show All Books'
+                    });
                 });
-            });
+        });
     };
 
     showCreateBook(req, res) {
@@ -24,7 +29,7 @@ class BookController extends Controller {
 
     createBook(req, res) {
         const {title, description, writer, count } = req.body;
-        if (title && description && writer) {
+        if (title && description && writer && count) {
             let newBook = new Book(req.body);
             newBook
                 .save()

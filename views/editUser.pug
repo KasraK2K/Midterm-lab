@@ -1,0 +1,32 @@
+extends layout
+
+block content
+    .container
+        .row
+            .col-6.offset-3
+                form(action="/user/edit/" + user._id method="post")
+                    input(type="hidden" name="_method" value="PUT")
+                    div.form-group
+                        label(for="name") name
+                        input#name.form-control(type="text" name="name" value=user.name)
+                    div.form-group
+                        label(for="email") email
+                        input#email.form-control(type="email" name="email" value=user.email)
+                    div.form-group
+                        label(for="password") password
+                        input#password.form-control(type="password" name="password" value=user.password)
+                    if (user.books)
+                        div.form-group
+                            label Booked Rentals
+                                each  book in user.books
+                                    p.lead.text-primary.m-0.mt-3.ml-3 #{book.title}
+                    div.form-group
+                        label(for="writer") writer
+                        select#writer.form-control(name="writer")
+                            if (user.writer)
+                                option(value="true" selected="true") true
+                                option(value="false") false
+                            else
+                                option(value="true") true
+                                option(value="false" selected="true") false
+                    button.btn.btn-primary(type="submit") submit

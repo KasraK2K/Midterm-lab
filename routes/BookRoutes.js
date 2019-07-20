@@ -10,11 +10,20 @@ const RedirectNotAuthenticated = require('middleware/RedirectNotAuthenticated');
 const BookController = require('controller/BookController');
 
 router.route('/')
-    .get(BookController.showAllBooks); // Show All Books
+    .get(
+        RedirectNotAuthenticated.handle,
+        BookController.showAllBooks
+    ); // Show All Books
 
 router.route('/create')
-    .get(BookController.showCreateBook)
-    .post(BookController.createBook); // Create Book
+    .get(
+        RedirectNotAuthenticated.handle,
+        BookController.showCreateBook
+    )
+    .post(
+        RedirectNotAuthenticated.handle,
+        BookController.createBook
+    ); // Create Book
 
 // Get Single Book Info
 router.route('/:id')
