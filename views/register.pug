@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    .container
+        .row
+            .col-6.offset-3
+                form(action="/user/register" method="post")
+                    div.form-group
+                        label(for="name") name
+                        input#name.form-control(type="text" name="name")
+                    div.form-group
+                        label(for="email") email
+                        input#email.form-control(type="email" name="email")
+                    div.form-group
+                        label(for="password") password
+                        input#password.form-control(type="password" name="password")
+                    div.form-group
+                        label(for="writer") writer
+                        select#writer.form-control(name="writer")
+                            option(value="false") false
+                            option(value="true") true
+                    button.btn.btn-primary(type="submit") submit

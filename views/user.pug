@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    .container
+        .row
+            .col-6.offset-3
+                if users.length
+                    table.table.table-striped
+                        thead.thead-dark
+                            tr
+                                th(scope='col') #
+                                th(scope='col') Name
+                                th(scope='col') Email
+                                th(scope='col') Writer
+                        tbody
+                            each user, i in users
+                                tr
+                                    th(scope='row') #{i+1}
+                                    td #{user.name}
+                                    td #{user.email}
+                                    td #{user.writer}
+                else
+                    .h2.text-center.text-danger Can't Find Any User

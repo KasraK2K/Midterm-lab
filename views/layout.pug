@@ -1,0 +1,29 @@
+doctype html
+html
+    head
+        title= title
+        link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css")
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.rounded.mb-5
+            a.navbar-brand(href='#') Library Menu
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+            #navbarNav.collapse.navbar-collapse
+                ul.navbar-nav
+                    li.nav-item
+                        a.nav-link.text-white(href='/') Home
+                    li.nav-item.dropdown
+                        a.nav-link.dropdown-toggle.text-white(href='#' id="navbarUser" data-toggle="dropdown") Users
+                        div.dropdown-menu(aria-labelledby="navbarUser")
+                            a.dropdown-item(href="/user") All Users
+                            a.dropdown-item(href="/user/register") Singup
+                            a.dropdown-item(href="/user/login") Singin
+                    li.nav-item
+                        a.nav-link.text-white(href='/book') Books
+
+        block content
+
+        script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js")
+        script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js")
