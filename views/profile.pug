@@ -5,7 +5,6 @@ block content
         .row
             .col-6.offset-3
                 form(action="/user/profile" method="post" enctype="multipart/form-data")
-
                     .input-group.mb-3
                         .input-group-prepend
                             span.py-0.input-group-text(id="avatarFileAddon") Upload
@@ -13,7 +12,3 @@ block content
                             input.custom-file-input(type="file" name="avatar" accept="image/*" id="avatarFile" aria-describedby="avatarFileAddon")
                             label.custom-file-label(for="avatarFile") Choose file
                     button.btn.btn-primary(type="submit") submit
-
-
-
-

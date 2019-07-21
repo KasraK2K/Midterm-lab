@@ -22,7 +22,7 @@ class UserController extends Controller {
 
     createUserProcess(req, res) {
         passport.authenticate('local.register', {
-            successRedirect: '/user',
+            successRedirect: '/',
             failureRedirect: '/user/register',
             failureFlash: true
         })(req, res);
@@ -72,7 +72,7 @@ class UserController extends Controller {
             res.status(401).send('Data Incomplete');
         }
     };
-    
+
     rentBook(req, res) {
         const books = req.user.books;
         if (books.indexOf(req.params.id) > -1) {
@@ -94,7 +94,7 @@ class UserController extends Controller {
             res.status(401).send('Data Incomplete');
         }
     };
-    
+
     deleteUser(req, res) {
         User
             .findOneAndDelete(req.params.id, (err) => {
@@ -102,7 +102,7 @@ class UserController extends Controller {
                 res.redirect('/user');
             });
     }
-    
+
     logout(req, res) {
         req.logout();
         res.redirect('/');
